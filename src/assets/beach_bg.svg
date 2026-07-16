@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 1200" width="100%" height="100%" preserveAspectRatio="xMinYMin slice">
+  <defs>
+    <!-- Sea gradient going from deeper turquoise to bright cyan -->
+    <linearGradient id="seaGradient" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#116b8d" />
+      <stop offset="40%" stop-color="#1992ad" />
+      <stop offset="100%" stop-color="#2ed2dc" />
+    </linearGradient>
+
+    <!-- Sand gradient from lighter gold near the shoreline to warmer tan at the bottom -->
+    <linearGradient id="sandGradient" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#f9ecc3" />
+      <stop offset="15%" stop-color="#f4dfaa" />
+      <stop offset="100%" stop-color="#ddb678" />
+    </linearGradient>
+
+    <!-- Faint inner shadow-like gradient for the shoreline foam -->
+    <linearGradient id="foamGradient" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="1" />
+      <stop offset="100%" stop-color="#ffffff" stop-opacity="0" />
+    </linearGradient>
+  </defs>
+
+  <!-- 1. Sandy Beach Base -->
+  <rect width="800" height="1200" fill="url(#sandGradient)" />
+
+  <!-- 2. Sea Area (Drawn on top at the upper portion) -->
+  <!-- Layer 1: Base Deep Sea -->
+  <path d="M 0,0 L 800,0 L 800,270 C 700,260 600,285 500,270 C 400,255 300,245 200,265 C 100,285 0,255 0,255 Z" fill="#0d5773" />
+
+  <!-- Layer 2: Main Sea Gradient -->
+  <path d="M 0,0 L 800,0 L 800,315 C 710,305 620,335 530,315 C 440,295 350,285 260,305 C 170,325 80,295 0,295 Z" fill="url(#seaGradient)" />
+
+  <!-- Layer 3: Shoreline Wave Foam (Slightly larger than Sea to overlay and create a white edge) -->
+  <path d="M 0,295 C 80,295 170,325 260,305 C 350,285 440,295 530,315 C 620,335 710,305 800,315 L 800,335 C 710,325 620,355 530,335 C 440,315 350,305 260,325 C 170,345 80,315 0,315 Z" fill="#ffffff" opacity="0.95" />
+  
+  <!-- Additional detailed wave curve -->
+  <path d="M 0,315 C 80,315 170,345 260,325 C 350,305 440,315 530,335 C 620,355 710,325 800,335 L 800,340 C 710,330 620,360 530,340 C 440,320 350,310 260,330 C 170,350 80,320 0,320 Z" fill="#ffffff" opacity="0.4" />
+
+
+
+  <!-- 6. Faint 4-Point Star Sparkle at the bottom right corner -->
+  <path d="M 690,1050 Q 690,1065 705,1065 Q 690,1065 690,1080 Q 690,1065 675,1065 Q 690,1065 690,1050 Z" fill="#ffffff" opacity="0.35" />
+  <circle cx="690" cy="1065" r="2" fill="#ffffff" opacity="0.6" />
+</svg>

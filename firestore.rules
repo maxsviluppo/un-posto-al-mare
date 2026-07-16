@@ -1,0 +1,64 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // ===============================================================
+    // Assumed Data Model
+    // ===============================================================
+    //
+    // Collection: bookings
+    // Fields:
+    //   - lastName: string (required)
+    //   - phone: string (required)
+    //   - date: string (required, YYYY-MM-DD)
+    //   - people: number (required)
+    //   - umbrellas: number (required)
+    //   - sunbeds: number (required)
+    //   - deckchairs: number (required)
+    //   - status: string (required, ['pending', 'confirmed', 'cancelled'])
+    //   - createdAt: timestamp (required)
+    //
+    // Collection: settings
+    // Document: config
+    //
+    // ===============================================================
+
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+
+    function isAdmin() {
+      return isAuthenticated() && 
+        (request.auth.token.email == "castromassimo@gmail.com" && request.auth.token.email_verified == true);
+    }
+
+    function isValidDateString(dateStr) {
+      return dateStr is string && dateStr.matches("^\\d{4}-\\d{2}-\\d{2}$");
+    }
+
+    function isValidBooking(data) {
+      return data.keys().hasAll(['lastName', 'phone', 'date', 'people', 'status', 'createdAt']) &&
+             data.lastName is string && data.lastName.size() > 0 && data.lastName.size() < 100 &&
+             data.phone is string && data.phone.size() > 0 && data.phone.size() < 30 &&
+             isValidDateString(data.date) &&
+             data.people is number && data.people > 0 &&
+             data.status in ['pending', 'confirmed', 'cancelled'] &&
+             data.createdAt is timestamp &&
+             (!('umbrellas' in data) || data.umbrellas is number) &&
+             (!('sunbeds' in data) || data.sunbeds is number) &&
+             (!('deckchairs' in data) || data.deckchairs is number);
+    }
+
+    match /bookings/{bookingId} {
+      allow read: if isAdmin();
+      allow create: if isValidBooking(request.resource.data);
+      allow update: if isAdmin();
+      allow delete: if isAdmin();
+    }
+
+    match /settings/config {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+  }
+}

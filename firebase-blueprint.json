@@ -1,0 +1,45 @@
+{
+  "entities": {
+    "Booking": {
+      "title": "Booking",
+      "description": "Dettagli di una prenotazione per il lido",
+      "type": "object",
+      "properties": {
+        "lastName": { "type": "string", "description": "Cognome del cliente" },
+        "phone": { "type": "string", "description": "Telefono del cliente" },
+        "date": { "type": "string", "description": "Data della prenotazione (YYYY-MM-DD)" },
+        "people": { "type": "number" },
+        "umbrellas": { "type": "number" },
+        "sunbeds": { "type": "number" },
+        "deckchairs": { "type": "number" },
+        "status": { "type": "string", "enum": ["pending", "confirmed", "cancelled"] },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["lastName", "phone", "date", "status"]
+    },
+    "Settings": {
+      "title": "Settings",
+      "description": "Configurazione e prezzi del lido",
+      "type": "object",
+      "properties": {
+        "umbrellaPrice": { "type": "number" },
+        "sunbedPrice": { "type": "number" },
+        "deckchairPrice": { "type": "number" },
+        "address": { "type": "string" },
+        "phone": { "type": "string" },
+        "email": { "type": "string" },
+        "description": { "type": "string" }
+      }
+    }
+  },
+  "firestore": {
+    "/bookings/{bookingId}": {
+      "schema": "Booking",
+      "description": "Prenotazioni del lido"
+    },
+    "/settings/config": {
+      "schema": "Settings",
+      "description": "Configurazione globale del lido"
+    }
+  }
+}
